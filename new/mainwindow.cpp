@@ -222,14 +222,14 @@ void MainWindow::BldCubicSpline()
         std::vector<SVec2f> f(N , 0);
         std::vector<double> c(N , 0);
 
-        double a = 1, b = 4;
+        double a = 1, b = 1;
 
         f[1] =  6 * (control_points[2] - 2 * control_points[1] + control_points[0]);
-        c[1] = 1;
+        c[1] = 4;
 
         for(size_t q = 2; q < N; q++)
         {
-            c[q] = 1 - a / c [q - 1] * b;
+            c[q] = 4 - a / c [q - 1] * b;
             f[q] = 6 * (control_points[q + 1] - 2 * control_points[q] + control_points[q - 1]) -
                     a / c[q - 1] * f[q - 1];
         }
@@ -242,8 +242,8 @@ void MainWindow::BldCubicSpline()
         }
       }
 
-        tangent_vectors[0] = tangent_vectors[1];
-        tangent_vectors[N] = tangent_vectors[N - 1];
+        tangent_vectors[0] = static_cast<SVec2f>(0);
+        tangent_vectors[N] = static_cast<SVec2f>(0);
 
     for(size_t q(0); q < number_curve_points; q++, t += step)
     {
